@@ -15,3 +15,5 @@ $(function() {
   }, on_deprecated);
 });
 ```
+
+Download: [zip](https://github.com/6/browser-deprecator/zipball/master) or [tar.gz](https://github.com/6/browser-deprecator/tarball/master)
