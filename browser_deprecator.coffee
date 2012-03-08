@@ -14,7 +14,7 @@ browser_info_hash = ->
   browser.flag = 'mozilla' if $.browser.mozilla
   browser.flag = 'msie' if $.browser.msie
   browser.flag = 'opera' if $.browser.opera
-  browser.flag = 'chrome' if not browser.flag? if /chrome/.test browser.ua
+  browser.flag = 'chrome' if not browser.flag? and /chrome/.test browser.ua
   browser.flag = 'safari' if not browser.flag? and /safari/.test browser.ua
   if browser.flag in ['chrome', 'safari']
     v = if browser.flag is 'chrome' then 'chrome' else 'version'

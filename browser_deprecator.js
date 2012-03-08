@@ -42,7 +42,7 @@
     if ($.browser.opera) {
       browser.flag = 'opera';
     }
-    if (/chrome/.test(browser.ua) ? !(browser.flag != null) : void 0) {
+    if (!(browser.flag != null) && /chrome/.test(browser.ua)) {
       browser.flag = 'chrome';
     }
     if (!(browser.flag != null) && /safari/.test(browser.ua)) {
