@@ -3,22 +3,21 @@
 <head>
   <meta charset="utf-8">
   <title>Test browser deprecator plugin</title>
-  <script src="lib/jquery-1.7.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="assets/css/deprecator.css">
+  <script src="assets/js/jquery-1.7.1.min.js"></script>
+  <script src="assets/js/jqModal.js"></script>
   <script src="browser_deprecator.js"></script>
   <script>
-  function on_deprecated() {
-    alert("Your browser is not supported!");
-  }
-  
   $(function() {
     $.deprecate({
       msie: '7',
       mozilla: '4',
       safari: '4'
-    }, on_deprecated);
+    });
   });
   </script>
 </head>
 <body>
+  <h1>some test content</h1>
 </body>
 </html>

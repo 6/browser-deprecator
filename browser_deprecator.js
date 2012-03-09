@@ -1,5 +1,27 @@
 (function() {
-  var browser_info_hash, version_compare;
+  var BROWSER_INFO, browser_info_hash, default_cb, version_compare;
+  BROWSER_INFO = {
+    mozilla: {
+      to_s: 'Mozilla Firefox',
+      url: 'http://www.firefox.com'
+    },
+    msie: {
+      to_s: 'Internet Explorer',
+      url: 'http://www.microsoft.com/ie/'
+    },
+    opera: {
+      to_s: 'Opera',
+      url: 'http://www.opera.com/download/'
+    },
+    chrome: {
+      to_s: 'Google Chrome',
+      url: 'http://www.google.com/chrome'
+    },
+    safari: {
+      to_s: 'Safari',
+      url: 'http://www.apple.com/safari/download/'
+    }
+  };
   version_compare = function(v1, v2) {
     var i, _ref;
     v1 = $.map(v1.split('.'), function(s, i) {
@@ -55,16 +77,30 @@
     }
     return browser;
   };
+  default_cb = function(browser, content, min_version) {
+    var info;
+    info = BROWSER_INFO[browser.flag];
+    if (content == null) {
+      content = "<h1>Please upgrade your browser.</h1><h2>This site requires " + info.to_s + " " + min_version + " or higher.</h2><h3><a href='" + info.url + "' target='_blank'>Download the newest " + info.to_s + " &rarr;</a></h3>";
+    }
+    return $("<div class='jqmWrap'><div class=jqmInner>" + content + "</div></div>").appendTo("body").jqm({
+      trigger: false,
+      modal: true
+    }).jqmShow();
+  };
   $.extend({
     deprecate: function(opts, cb) {
       var browser;
       browser = browser_info_hash();
+      if (cb == null) {
+        cb = default_cb;
+      }
       return $.each(opts, function(flag, min_version) {
         if (browser.flag !== flag) {
           return true;
         }
         if (version_compare(min_version, browser.version) < 0) {
-          return cb();
+          return cb(browser, opts.content, min_version);
         }
       });
     }

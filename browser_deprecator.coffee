@@ -1,3 +1,20 @@
+BROWSER_INFO =
+  mozilla:
+    to_s: 'Mozilla Firefox'
+    url: 'http://www.firefox.com'
+  msie:
+    to_s: 'Internet Explorer'
+    url: 'http://www.microsoft.com/ie/'
+  opera:
+    to_s: 'Opera'
+    url: 'http://www.opera.com/download/'
+  chrome:
+    to_s: 'Google Chrome'
+    url: 'http://www.google.com/chrome'
+  safari:
+    to_s: 'Safari'
+    url: 'http://www.apple.com/safari/download/'
+
 version_compare = (v1, v2) ->
   v1 = $.map v1.split('.'), (s, i) -> parseInt(s, 10)
   v2 = $.map v2.split('.'), (s, i) -> parseInt(s, 10)
@@ -22,9 +39,15 @@ browser_info_hash = ->
     browser.version = version.split(" ")[0]
   browser
 
+default_cb = (browser, content, min_version) ->
+  info = BROWSER_INFO[browser.flag]
+  content ?= "<h1>Please upgrade your browser.</h1><h2>This site requires #{info.to_s} #{min_version} or higher.</h2><h3><a href='#{info.url}' target='_blank'>Download the newest #{info.to_s} &rarr;</a></h3>"
+  $("<div class='jqmWrap'><div class=jqmInner>#{content}</div></div>").appendTo("body").jqm(trigger:no, modal:yes).jqmShow()
+
 $.extend
   deprecate: (opts, cb) ->
     browser = browser_info_hash()
+    cb ?= default_cb
     $.each opts, (flag, min_version) ->
       return true if browser.flag isnt flag # continue
-      return cb() if version_compare(min_version, browser.version) < 0
+      return cb(browser, opts.content, min_version) if version_compare(min_version, browser.version) < 0
