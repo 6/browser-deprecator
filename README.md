@@ -1,5 +1,10 @@
 Give browser-deprecator a hash of browsers to check for (with minimum version numbers) and a callback for when the visitor's browser does not meet the criteria.
 
+Screenshot:
+
+<img src="https://github.com/6/browser-deprecator/raw/3e44dfa2981cbfb097a46976d2aff2574450c6db/screenshot.png">
+
+
 Example usage:
 
 ```javascript
