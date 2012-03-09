@@ -5,7 +5,18 @@ Screenshot:
 <img src="https://github.com/6/browser-deprecator/raw/3e44dfa2981cbfb097a46976d2aff2574450c6db/screenshot.png">
 
 
-Example usage:
+Example usage (this will require MSIE >= version 7 and Firefox >= version 3.6.6):
+
+```javascript
+$(function() {
+  $.deprecate({
+    msie: '7',
+    mozilla: '3.6.6'
+  });
+});
+```
+
+Custom callback example:
 
 ```javascript
 function on_deprecated() {
@@ -15,10 +26,11 @@ function on_deprecated() {
 $(function() {
   $.deprecate({
     msie: '7',
-    mozilla: '3.6.6',
-    safari: '4.1.3'
+    mozilla: '3.6.6'
   }, on_deprecated);
 });
 ```
+
+---
 
 Download: [zip](https://github.com/6/browser-deprecator/zipball/master) or [tar.gz](https://github.com/6/browser-deprecator/tarball/master)
