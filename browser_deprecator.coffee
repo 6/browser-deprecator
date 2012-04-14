@@ -45,7 +45,10 @@ browser_info_hash = ->
 
 default_cb = (browser, content, min_version) ->
   info = BROWSER_INFO[browser.flag]
-  content ?= "<h1>Please upgrade your browser.</h1><h2>This site requires #{info.to_s} #{min_version} or higher.</h2><h3><a href='#{info.url}' target='_blank'>Download the newest #{info.to_s} &rarr;</a></h3>"
+  if min_version
+    content ?= "<h1>Please upgrade your browser.</h1><h2>This site requires #{info.to_s} #{min_version} or higher.</h2><h3><a href='#{info.url}' target='_blank'>Download the newest #{info.to_s} &rarr;</a></h3>"
+  else
+    content ?= "<h1>Please use a different browser.</h1><h2>This site does not work on #{info.to_s}.</h2>"
   $("<div class='jqmWrap'><div class=jqmInner>#{content}</div></div>").appendTo("body").jqm(trigger:no, modal:yes).jqmShow()
 
 $.extend
@@ -54,4 +57,4 @@ $.extend
     cb ?= default_cb
     $.each opts, (flag, min_version) ->
       return true if browser.flag isnt flag # continue
-      return cb(browser, opts.content, min_version) if version_compare(min_version, browser.version) > 0
+      return cb(browser, opts.content, min_version) if not min_version or version_compare(min_version, browser.version) > 0
