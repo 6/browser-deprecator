@@ -23,31 +23,27 @@
     }
   };
   version_compare = function(v1, v2) {
-    var i, _ref;
-    v1 = $.map(v1.split('.'), function(s, i) {
-      return parseInt(s, 10);
-    });
-    v2 = $.map(v2.split('.'), function(s, i) {
-      return parseInt(s, 10);
-    });
-    for (i = 0, _ref = v1.length - 1; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-      if (i === v2.length) {
-        return -1;
-      }
-      if (v1[i] === v2[i]) {
-        continue;
-      }
-      if (v1[i] > v2[i]) {
-        return -1;
+    var a, b, i, p, q, valueOf, values, _ref;
+    valueOf = function(t) {
+      if (isNaN(t)) {
+        return t.charCodeAt(0);
       } else {
-        return 1;
+        return Number(t) - Math.pow(2, 32);
+      }
+    };
+    values = [v1, v2].map(function(s) {
+      return s.toString().toLowerCase().match(/([a-z]|[0-9]+(?:\.[0-9]+)?)/ig);
+    });
+    a = values[0];
+    b = values[1];
+    for (i = 0, _ref = Math.min(a.length, b.length); 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
+      p = valueOf(a[i]);
+      q = valueOf(b[i]);
+      if (p !== q) {
+        return p - q;
       }
     }
-    if (v1.length < v2.length) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return a.length - b.length;
   };
   browser_info_hash = function() {
     var browser, v, version, _ref;
@@ -99,7 +95,7 @@
         if (browser.flag !== flag) {
           return true;
         }
-        if (version_compare(min_version, browser.version) < 0) {
+        if (version_compare(min_version, browser.version) > 0) {
           return cb(browser, opts.content, min_version);
         }
       });

@@ -15,14 +15,18 @@ BROWSER_INFO =
     to_s: 'Safari'
     url: 'http://www.apple.com/safari/download/'
 
+# Based on natural-order sort:
+# http://blog.jcoglan.com/2008/01/04/natural-order-sort-in-javascript/
 version_compare = (v1, v2) ->
-  v1 = $.map v1.split('.'), (s, i) -> parseInt(s, 10)
-  v2 = $.map v2.split('.'), (s, i) -> parseInt(s, 10)
-  for i in [0..(v1.length - 1)]
-    return -1 if i is v2.length
-    continue if v1[i] is v2[i]
-    return if v1[i] > v2[i] then -1 else 1
-  return if v1.length < v2.length then 1 else 0
+  valueOf = (t) -> if isNaN(t) then t.charCodeAt(0) else Number(t) - Math.pow(2,32)
+  values = [v1 ,v2].map (s) -> s.toString().toLowerCase().match(/([a-z]|[0-9]+(?:\.[0-9]+)?)/ig)
+  a = values[0]
+  b = values[1]
+  for i in [0..Math.min(a.length, b.length)]
+    p = valueOf(a[i])
+    q = valueOf(b[i])
+    return p - q if p != q
+  return a.length - b.length
 
 browser_info_hash = ->
   browser =
@@ -50,4 +54,4 @@ $.extend
     cb ?= default_cb
     $.each opts, (flag, min_version) ->
       return true if browser.flag isnt flag # continue
-      return cb(browser, opts.content, min_version) if version_compare(min_version, browser.version) < 0
+      return cb(browser, opts.content, min_version) if version_compare(min_version, browser.version) > 0
