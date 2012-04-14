@@ -74,18 +74,19 @@
     return browser;
   };
   default_cb = function(browser, content, min_version) {
-    var info;
+    var info, modal;
     info = BROWSER_INFO[browser.flag];
     if (min_version) {
       if (content == null) {
-        content = "<h1>Please upgrade your browser.</h1><h2>This site requires " + info.to_s + " " + min_version + " or higher.</h2><h3><a href='" + info.url + "' target='_blank'>Download the newest " + info.to_s + " &rarr;</a></h3>";
+        content = "<h1>Please upgrade your browser.</h1>    <h2>This site requires " + info.to_s + " " + min_version + " or higher.</h2>    <h3><a href='" + info.url + "' target='_blank'>Download the newest " + info.to_s + " &rarr;</a></h3>";
       }
     } else {
       if (content == null) {
-        content = "<h1>Please use a different browser.</h1><h2>This site does not work on " + info.to_s + ".</h2>";
+        content = "<h1>Please use a different browser.</h1>    <h2>This site does not work on " + info.to_s + ".</h2>";
       }
     }
-    return $("<div class='jqmWrap'><div class=jqmInner>" + content + "</div></div>").appendTo("body").jqm({
+    modal = "<div class='jqmWrap'><div class=jqmInner>" + content + "</div></div>";
+    return $(modal).appendTo("body").jqm({
       trigger: false,
       modal: true
     }).jqmShow();
