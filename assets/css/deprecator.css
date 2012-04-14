@@ -9,8 +9,8 @@
     position: fixed;
     top: 20%;
     left: 50%;
-    margin-left: -170px;
-    width: 340px;
+    margin-left: -175px;
+    width: 350px;
     background: #555;
     background: rgba(0,0,0,0.3);
     border-radius: 5px;
@@ -39,12 +39,13 @@
   font-size: 12px;
   color: #888;
   font-weight: 400;
-  padding: 6px 0 10px;
+  padding: 6px 0 0;
 }
 
 .jqmInner h3 {
   font-size: 14px;
   font-weight: 700;
+  margin-top: 10px;
   padding-top: 13px;
   border-top: 1px solid #ddd;
 }
