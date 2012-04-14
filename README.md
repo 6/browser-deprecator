@@ -5,13 +5,14 @@ Screenshot:
 <img src="https://github.com/6/browser-deprecator/raw/3e44dfa2981cbfb097a46976d2aff2574450c6db/screenshot.png">
 
 
-Example usage (this will require MSIE >= version 7 and Firefox >= version 3.6.6):
+Example usage (this will require MSIE >= version 7, Firefox >= version 3.6.6, and will deprecate any version of Opera):
 
 ```javascript
 $(function() {
   $.deprecate({
     msie: '7',
-    mozilla: '3.6.6'
+    mozilla: '3.6.6',
+    opera: false
   });
 });
 ```
@@ -26,7 +27,8 @@ function on_deprecated() {
 $(function() {
   $.deprecate({
     msie: '7',
-    mozilla: '3.6.6'
+    mozilla: '3.6.6',
+    opera: false
   }, on_deprecated);
 });
 ```
